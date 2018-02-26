@@ -44,8 +44,8 @@ dl_classification_single=function(x,y,complexity,dropout,lr,num_epoch=5,num_pati
     fit(x = x,y=y,callbacks = c(early_stopping),epochs = num_epoch,verbose = 0)
   
   output_metric=model_train$metrics
-  cat(paste0('Average loss is ',round(mean(output_metric$loss),5),'. '))
-  cat(paste0('Average accuracy is ',round(mean(output_metric$acc),5),'\n'))
+  cat(paste0('Best loss is ',round(min(output_metric$loss),5),'. '))
+  cat(paste0('Best accuracy is ',round(max(output_metric$acc),5),'\n'))
   return(list(model=model,
               loss=output_metric$loss,
               accuracy=output_metric$acc

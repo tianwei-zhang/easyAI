@@ -62,8 +62,8 @@ deep_lm=function(x,
                      complexity=list(complexity),
                      dropout=list(dropout),
                      lr=lr,
-                     loss=round(mean(model$loss),5),
-                     accuracy=round(mean(model$mean_squared_error),5)
+                     loss=round(min(model$loss),5),
+                     accuracy=round(min(model$mean_squared_error),5)
                    )
       )
       

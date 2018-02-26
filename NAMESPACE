@@ -2,6 +2,10 @@
 
 export(deep_lm)
 export(deep_logistic)
+export(deep_ncf)
 export(dl_classification_single)
 export(dl_regression_single)
+export(ncf_data_transform)
+export(ncf_get_training_data)
+export(ncf_single)
 export(non_numeric_col_trans)
