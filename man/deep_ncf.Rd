@@ -6,7 +6,8 @@
 \usage{
 deep_ncf(data, num_layer = seq(1, 5, 1), max_units = 10, start_unit = 3,
   max_lr = 0.2, min_lr = 0.001, iteration_per_layer = 5,
-  min_mf_output_dim = 2, max_mf_output_dim = 10, num_epoch = 2)
+  min_mf_output_dim = 2, max_mf_output_dim = 10, num_epoch = 2,
+  top = 100)
 }
 \arguments{
 \item{data}{Transaction dataset. Format must be order_id (could be dummy), user_id, and product_id}
@@ -28,6 +29,8 @@ deep_ncf(data, num_layer = seq(1, 5, 1), max_units = 10, start_unit = 3,
 \item{max_mf_output_dim}{Max number of latent factors to represent users and items}
 
 \item{num_epoch}{number of epoches to go through during training}
+
+\item{top}{Number of top products and customers to include. Can be NULL (e.g. will include everything)}
 }
 \value{
 returns a list object with two values: 

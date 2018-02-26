@@ -9,6 +9,7 @@
 #' @param min_mf_output_dim Min number of latent factors to represent users and items
 #' @param max_mf_output_dim Max number of latent factors to represent users and items
 #' @param num_epoch number of epoches to go through during training
+#' @param top Number of top products and customers to include. Can be NULL (e.g. will include everything)
 #' @return returns a list object with two values: 
 #' train_performance: A table with parameters and model performance metrics
 #' best_model: a keras_model object with the optimal parameters
@@ -25,7 +26,8 @@ deep_ncf=function(data,
                        min_mf_output_dim=2,
                        max_mf_output_dim=10,
                   # model parameters
-                       num_epoch=2
+                       num_epoch=2,
+                       top=100
 ){
   set.seed(0)
 
@@ -46,7 +48,7 @@ deep_ncf=function(data,
       cat('\n')
       cat('lr: ',lr)
       cat('\n')
-      model=ncf_single(data,mf_output_dim,mlp_complexity,lr=lr,epoch=num_epoch)
+      model=ncf_single(data,mf_output_dim,mlp_complexity=complexity,lr=lr,epoch=num_epoch)
       
       output=rbind(output,
                    tibble(
@@ -74,7 +76,11 @@ deep_ncf=function(data,
   cat('\n')
   cat('lr: ',best_model_param$lr)
   cat('\n')
-  best_model=ncf_single(data,best_model_param$mf_output_dim,best_model_param$complexity,lr=best_model_param$lr,epoch=num_epoch)
+  best_model=ncf_single(data,
+                        mf_output_dim = best_model_param$mf_output_dim,
+                        mlp_complexity = best_model_param$complexity[[1]],
+                        lr=best_model_param$lr,
+                        epoch=num_epoch)
   
   return(list(train_performance=output,
               best_model=best_model

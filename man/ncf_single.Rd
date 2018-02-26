@@ -4,7 +4,8 @@
 \alias{ncf_single}
 \title{Neural Collaborative Filtering with a single configuration}
 \usage{
-ncf_single(data, mf_output_dim, mlp_complexity, lr = 0.001, epoch = 2)
+ncf_single(data, mf_output_dim, mlp_complexity, lr = 0.001, epoch = 2,
+  top = 100)
 }
 \arguments{
 \item{data}{Transaction dataset. Format must be order_id (could be dummy), user_id, and product_id}
@@ -12,6 +13,8 @@ ncf_single(data, mf_output_dim, mlp_complexity, lr = 0.001, epoch = 2)
 \item{mf_output_dim}{Number of latent vectors to represent users and items}
 
 \item{mlp_complexity}{Number of hidden layers in the MLP layer}
+
+\item{top}{Number of top products and customers to include. Can be NULL (e.g. will include everything)}
 }
 \value{
 returns a list object with three values: 

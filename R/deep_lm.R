@@ -12,8 +12,10 @@
 #' @param num_epoch number of epoches to go through during training
 #' @param num_patience number of patience in early stopping criteria
 #' @return returns a list object with two values: 
-#' train_performance: A table with parameters and model performance metrics
-#' best_model: a keras_model object with the optimal parameters
+#' \itemize{
+#'   \item{train_performance: A table with parameters and model performance metrics}
+#'   \item{best_model: a keras_model object with the optimal structure}
+#' }
 #' @export
 
 deep_lm=function(x,

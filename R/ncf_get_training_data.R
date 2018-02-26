@@ -20,7 +20,7 @@ ncf_get_training_data=function(data,negative_ratio){
       data_positive,
       data_negative
     )
-    cat(paste0('Training data includes ',nrow(data_positive),' positive cases and ',nrow(data_negative),' negative cases.'))
+    #cat(paste0('Training data includes ',nrow(data_positive),' positive cases and ',nrow(data_negative),' negative cases. \n'))
     return(data_training)
     
   }

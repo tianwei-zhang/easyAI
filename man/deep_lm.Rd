@@ -35,8 +35,10 @@ deep_lm(x, y, num_layer = seq(1, 5, 1), max_units = NULL, start_unit = 5,
 }
 \value{
 returns a list object with two values: 
-train_performance: A table with parameters and model performance metrics
-best_model: a keras_model object with the optimal parameters
+\itemize{
+  \item{train_performance: A table with parameters and model performance metrics}
+  \item{best_model: a keras_model object with the optimal structure}
+}
 }
 \description{
 Deep Learning Regression with Automated Parameter Tuning
