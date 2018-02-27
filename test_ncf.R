@@ -20,7 +20,7 @@ head(data_transactions)
 
 data=data_transactions
 
-output=ncf_single(data,mf_output_dim = 9,mlp_complexity = c(5),epoch = 2,lr = 0.005363087)
+#output=ncf_single(data,mf_output_dim = 9,mlp_complexity = c(5),epoch = 2,lr = 0.005363087)
 
 
 output2=deep_ncf(data = data,num_layer = c(1,2),max_units = 16,start_unit = 2,num_epoch = 1,top = 10)
