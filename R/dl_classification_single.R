@@ -6,7 +6,7 @@
 #' @param lr learning rate for the optimizer
 #' @param num_epoch number of epoches to go through during training
 #' @param num_patience number of patience in early stopping criteria
-#' @return returns a list object with three values: 
+#' @return returns a list object with three values:
 #' model: keras model contructed. A keras_model object
 #' loss: a vector containing loss value in each epoch
 #' accuracy: a vector containing accuracy value in each epoch
@@ -20,29 +20,29 @@ dl_classification_single=function(x,y,complexity,dropout,lr,num_epoch=5,num_pati
                 units = ncol(x),
                 activation = 'relu',
                 kernel_initializer = 'normal')
-  
+
   num_layer=length(complexity)
   for(i in 1:num_layer){
     model=model%>%
       layer_dense(units = complexity[i],activation = 'relu')%>%
       layer_dropout(rate =dropout[i] )
   }
-  
+
   model=model%>%
     layer_dense(units=ncol(y),activation = 'softmax')
-  
+
   model%>%
     compile(
-      optimizer = optimizer_adam(lr=0.001),
+      optimizer = optimizer_adam(lr=lr),
       loss = 'categorical_crossentropy',
       metrics = c('accuracy')
     )
-  
+
   early_stopping <- callback_early_stopping(monitor = 'val_loss', patience = num_patience)
-  
+
   model_train=model%>%
     fit(x = x,y=y,callbacks = c(early_stopping),epochs = num_epoch,verbose = 0)
-  
+
   output_metric=model_train$metrics
   cat(paste0('Best loss is ',round(min(output_metric$loss),5),'. '))
   cat(paste0('Best accuracy is ',round(max(output_metric$acc),5),'\n'))
@@ -51,4 +51,3 @@ dl_classification_single=function(x,y,complexity,dropout,lr,num_epoch=5,num_pati
               accuracy=output_metric$acc
   ))
 }
-
