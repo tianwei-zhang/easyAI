@@ -2,6 +2,8 @@
 rm(list=ls())
 library(titanic)
 library(easyAI)
+library(dplyr)
+library(keras)
 
 titanic_train=na.omit(titanic_train)
 
@@ -18,6 +20,13 @@ x_train=as.matrix(titanic_trans_train%>%select(-Survived))
 
 x_train=normalize(x_train)
 
+
+google_logistic(x_train,y_train)
+
+
+
+
+############ Old testing script ################
 output=deep_logistic(x_train,y_train)
 
 output=deep_lm(x_train,y_train)
@@ -45,5 +54,3 @@ summary(model)
 
 model%>%
   fit(x = x_train,y=y_train,callbacks = c(early_stopping),epochs = 5)
-
-

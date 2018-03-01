@@ -23,7 +23,7 @@ dl_classification_single(x, y, complexity, dropout, lr, num_epoch = 5,
 \item{num_patience}{number of patience in early stopping criteria}
 }
 \value{
-returns a list object with three values: 
+returns a list object with three values:
 model: keras model contructed. A keras_model object
 loss: a vector containing loss value in each epoch
 accuracy: a vector containing accuracy value in each epoch

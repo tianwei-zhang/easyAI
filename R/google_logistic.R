@@ -16,14 +16,14 @@
 #' best_model: a keras_model object with the optimal parameters
 #' @export
 
-deep_logistic=function(x,
+google_logistic=function(x,
                        y,
                        # optimizer parameters
                        num_layer=seq(1,5,1),
                        max_units=NULL,
                        start_unit=5,
                        max_dropout=0.2,
-                       min_dropout=0,
+                       min_dropout=0.0001,
                        max_lr=0.2,
                        min_lr=0.001,
                        iteration_per_layer=5,
@@ -43,76 +43,37 @@ deep_logistic=function(x,
   dir=getwd()
   n=nrow(x)
   train_size=round(0.8*n)
-  train_index=sample(train_size,1:n)
+  train_index=sample(size=train_size,x=1:n)
   x_train=x[train_index,]
   x_test=x[-train_index,]
 
   y_train=y[train_index,]
   y_test=y[-train_index,]
+  cat('Split data into train and test by 80:20\n')
+  cat(nrow(x_train),'rows in training and ',nrow(x_test),'rows in test \n')
+  cat('# of fetures in X:',ncol(x),'\n')
+  cat('# of classes in Y:',ncol(y),'\n')
+  cat('Saving data to ',dir, '\n')
+  write.csv(x_train,'x_train.csv',row.names=F)
+  write.csv(y_train,'y_train.csv',row.names=F)
+  write.csv(x_test,'x_test.csv',row.names=F)
+  write.csv(y_test,'y_test.csv',row.names=F)
 
-  train_file='
-  library(keras)
-  #Set Flag
-  FLAGS <- flags(
-  flag_integer("layer1", 10),
-  flag_numeric("dropout1",0.1)
-  )
+ for(i in 1:length(num_layer)){
+   write_train(num_layer=num_layer[i],num_epoch=num_epoch,num_patience=num_patience)
+   write_yml(num_layer=num_layer[i], max_units,
+    start_unit,
+    max_dropout,
+    min_dropout,
+    max_lr,
+    min_lr)
+ }
 
-  # structure model
-  model=keras_model_sequential()
-  model=model%>%
-    layer_dense(batch_input_shape =list(NULL,ncol(x)) ,
-                units = ncol(x),
-                activation = "relu",
-                kernel_initializer = "normal")%>%
-    layer_dense(units = FLAGS$layer1,activation = "relu")%>%
-    layer_dropout(rate =FLAGS$dropout1)%>%
-    layer_dense(units=ncol(y),activation = "softmax")
+  train_name=paste0('train_layer_',num_layer,'.R')
+  config_name=paste0('config_layer_',num_layer,'.yml')
+  for(i in 1:length(num_layer)){
+    cloudml_train(file = train_name[i],config =config_name[i])
+  }
 
-    # compile model
-    model%>%
-      compile(
-        optimizer = optimizer_adam(lr=ls),
-        loss = "categorical_crossentropy",
-        metrics = c("accuracy")
-      )
-
-      # Fit models
-      early_stopping <- callback_early_stopping(monitor = "val_loss", patience = num_patience)
-      model%>%
-        fit(
-          x=x_train,
-          y=y_train,
-          validation_data=list[x_test,y_test]
-          callbacks = c(early_stopping),epochs = num_epoch,verbose = 0
-        )
-    '
-    cat(paste0('Saving train.R to',dir,'/train.R'))
-    write(train_file,file.path(paste0(dir,'/train.R')))
-
-    config_file=paste0('
-    trainingInput:
-      scaleTier: CUSTOM
-      masterType: standard_gpu
-      hyperparameters:
-        goal: MINIMIZE
-        hyperparameterMetricTag: val_loss
-        maxTrials: 100
-        maxParallelTrials: 100
-        params:
-          - parameterName: layer1
-            type: INTEGER
-            minValue: ',start_unit,'
-            maxValue: ',max_units,'
-            scaleType: UNIT_LINEAR_SCALE
-          - parameterName: dropout1
-            type: DOUBLE
-            minValue: ',min_dropout,'
-            maxValue: ',max_lr,'
-            scaleType: UNIT_LOG_SCALE
-    ')
-    cat(paste0('Saving config.yml to',dir,'/config.yml'))
-    write(config_file,file.path(paste0(dir,'/confi.yml')))
-    cloudml_train(file = 'train.R',config ='tuning.yml')
 
 }
