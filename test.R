@@ -1,10 +1,14 @@
 # Test scripts
 rm(list=ls())
 library(titanic)
+devtools::install_github('tianwei-zhang/easyAI')
 library(easyAI)
 library(dplyr)
 library(keras)
-
+is_keras_available()
+devtools::install_github("rstudio/cloudml")
+library(cloudml)
+gcloud_install()
 titanic_train=na.omit(titanic_train)
 
 titanic_trans_train=non_numeric_col_trans(titanic_train,id.var = 'PassengerId')
