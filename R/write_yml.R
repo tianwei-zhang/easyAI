@@ -15,37 +15,39 @@ write_yml=function(num_layer,
    min_dropout,
    max_lr,
    min_lr){
-     code='trainingInput:
-       scaleTier: CUSTOM
-       masterType: standard_gpu
-       hyperparameters:
-         goal: MINIMIZE
-         hyperparameterMetricTag: val_loss
-         maxTrials: 20
-         maxParallelTrials: 5
-         params:'
+     code='
+trainingInput:
+  scaleTier: CUSTOM
+  masterType: standard_gpu
+  hyperparameters:
+    goal: MINIMIZE
+    hyperparameterMetricTag: val_loss
+    maxTrials: 20
+    maxParallelTrials: 5
+    params:'
 
       for(i in 1:num_layer){
         code=paste0(code,'
-          - parameterName: layer',i,'
-            type: INTEGER
-            minValue: ',start_unit,'
-            maxValue: ',max_units,'
-            scaleType: UNIT_LINEAR_SCALE
-          - parameterName: dropout',i,'
-            type: DOUBLE
-            minValue: ',min_dropout,'
-            maxValue: ',max_dropout,'
-            scaleType: UNIT_LOG_SCALE
+      - parameterName: layer',i,'
+        type: INTEGER
+        minValue: ',start_unit,'
+        maxValue: ',max_units,'
+        scaleType: UNIT_LINEAR_SCALE
+      - parameterName: dropout',i,'
+        type: DOUBLE
+        minValue: ',min_dropout,'
+        maxValue: ',max_dropout,'
+        scaleType: UNIT_LINEAR_SCALE
         ')
-      }
+      } 
 
-          code=paste0(code,' - parameterName: lr
-           type: DOUBLE
-           minValue: ',min_lr,'
-           maxValue: ',max_lr,'
-           scaleType: UNIT_LOG_SCALE
-          ')
+          code=paste0(code,'
+      - parameterName: lr
+        type: DOUBLE
+        minValue: ',min_lr,'
+        maxValue: ',max_lr,'
+        scaleType: UNIT_LOG_SCALE
+        ')
      dir=getwd()
      cat(paste0('Saving config.yml to ',dir,'/config_layer_',num_layer,'.yml \n'))
      write(code,file.path(paste0(dir,'/config_layer_',num_layer,'.yml')))

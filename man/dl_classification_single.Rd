@@ -4,8 +4,8 @@
 \alias{dl_classification_single}
 \title{Deep Learning Classification with Known Network Structure}
 \usage{
-dl_classification_single(x, y, complexity, dropout, lr, num_epoch = 5,
-  num_patience = 3)
+dl_classification_single(x, y, complexity, dropout, lr, num_epoch, num_patience,
+  validation_split)
 }
 \arguments{
 \item{x}{training feature matrix}
@@ -21,6 +21,8 @@ dl_classification_single(x, y, complexity, dropout, lr, num_epoch = 5,
 \item{num_epoch}{number of epoches to go through during training}
 
 \item{num_patience}{number of patience in early stopping criteria}
+
+\item{validation_split}{% of data used for validation}
 }
 \value{
 returns a list object with three values:

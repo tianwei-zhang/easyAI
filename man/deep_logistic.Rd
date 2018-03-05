@@ -4,17 +4,19 @@
 \alias{deep_logistic}
 \title{Deep Learning Classification with Automated Parameter Tuning}
 \usage{
-deep_logistic(x, y, num_layer = seq(1, 5, 1), max_units = NULL,
+deep_logistic(x, y, option, num_layer = seq(1, 3, 1), max_units = NULL,
   start_unit = 5, max_dropout = 0.2, min_dropout = 0, max_lr = 0.2,
-  min_lr = 0.001, iteration_per_layer = 5, num_epoch = 5,
-  num_patience = 3)
+  min_lr = 0.001, iteration_per_layer = 10, validation_split = 0.2,
+  num_epoch = 10, num_patience = 3)
 }
 \arguments{
 \item{x}{training feature matrix}
 
 \item{y}{target matrix}
 
-\item{num_layer}{a vector of integers indicating the number of hidden layers to test. Default to seq(1,5,1)}
+\item{option}{either local or google for hyper-parameter tuning}
+
+\item{num_layer}{a vector of integers indicating the number of hidden layers to test. Default to seq(1,3,1)}
 
 \item{max_units}{the maximum number of hidden units in a layer. Default to an optimized value based on data}
 
@@ -30,14 +32,18 @@ deep_logistic(x, y, num_layer = seq(1, 5, 1), max_units = NULL,
 
 \item{iteration_per_layer}{Number of parameter randomizations for a given number of hidden layers. More iterations will explore a larger parameter space}
 
-\item{num_epoch}{number of epoches to go through during training}
+\item{validation_split}{Percent of data used for validation. Default to 20 percent}
 
-\item{num_patience}{number of patience in early stopping criteria}
+\item{num_epoch}{number of epoches to go through during training. Default to 10}
+
+\item{num_patience}{number of patience in early stopping criteria. Default to 3}
 }
 \value{
 returns a list object with two values: 
-train_performance: A table with parameters and model performance metrics
-best_model: a keras_model object with the optimal parameters
+\itemize{
+  \item{train_performance: A table with parameters and model performance metrics}
+  \item{best_model: a keras_model object with the optimal structure}
+}
 }
 \description{
 Deep Learning Classification with Automated Parameter Tuning

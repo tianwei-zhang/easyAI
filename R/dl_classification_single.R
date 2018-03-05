@@ -6,13 +6,14 @@
 #' @param lr learning rate for the optimizer
 #' @param num_epoch number of epoches to go through during training
 #' @param num_patience number of patience in early stopping criteria
+#' @param validation_split % of data used for validation
 #' @return returns a list object with three values:
 #' model: keras model contructed. A keras_model object
 #' loss: a vector containing loss value in each epoch
 #' accuracy: a vector containing accuracy value in each epoch
 #' @export
 
-dl_classification_single=function(x,y,complexity,dropout,lr,num_epoch=5,num_patience=3){
+dl_classification_single=function(x,y,complexity,dropout,lr,num_epoch,num_patience,validation_split){
   library(keras)
   model=keras_model_sequential()
   model=model%>%
@@ -41,13 +42,13 @@ dl_classification_single=function(x,y,complexity,dropout,lr,num_epoch=5,num_pati
   early_stopping <- callback_early_stopping(monitor = 'val_loss', patience = num_patience)
 
   model_train=model%>%
-    fit(x = x,y=y,callbacks = c(early_stopping),epochs = num_epoch,verbose = 0)
+    fit(x = x,y=y,callbacks = c(early_stopping),epochs = num_epoch,verbose = 0,validation_split = validation_split)
 
   output_metric=model_train$metrics
-  cat(paste0('Best loss is ',round(min(output_metric$loss),5),'. '))
-  cat(paste0('Best accuracy is ',round(max(output_metric$acc),5),'\n'))
+  cat(paste0('Best validation loss is ',round(min(output_metric$val_loss),5),'. '))
+  cat(paste0('Best validation accuracy is ',round(max(output_metric$val_acc),5),'\n'))
   return(list(model=model,
-              loss=output_metric$loss,
-              accuracy=output_metric$acc
+              loss=output_metric$val_loss,
+              accuracy=output_metric$val_acc
   ))
 }

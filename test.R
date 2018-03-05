@@ -1,14 +1,14 @@
 # Test scripts
 rm(list=ls())
 library(titanic)
-devtools::install_github('tianwei-zhang/easyAI')
+#devtools::install_github('tianwei-zhang/easyAI')
 library(easyAI)
 library(dplyr)
 library(keras)
-is_keras_available()
-devtools::install_github("rstudio/cloudml")
+#is_keras_available()
+#devtools::install_github("rstudio/cloudml")
 library(cloudml)
-gcloud_install()
+#gcloud_install()
 titanic_train=na.omit(titanic_train)
 
 titanic_trans_train=non_numeric_col_trans(titanic_train,id.var = 'PassengerId')
@@ -25,10 +25,19 @@ x_train=as.matrix(titanic_trans_train%>%select(-Survived))
 x_train=normalize(x_train)
 
 
-google_logistic(x_train,y_train)
+deep_logistic(x_train,y_train,option = 'google',num_layer = c(1,2))
+
+google_logistic(x_train,y_train,num_layer = c(1,2))
+# write_yml(num_layer = c(2),max_units = 10,start_unit = 1,max_dropout = 0.1,min_dropout = 0.01,max_lr = 0.5,min_lr = 0.1)
+# write_train(num_layer = c(2),num_epoch = 10,num_patience = 3)
+
+con <- file("cloudml_output1.txt")
+sink(con, append=TRUE)
+sink(con, append=TRUE)
+google_logistic(x_train,y_train,num_layer = c(1))
 
 
-
+######## testing yaml ######
 
 ############ Old testing script ################
 output=deep_logistic(x_train,y_train)

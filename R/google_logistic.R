@@ -1,4 +1,4 @@
-#' Deep Learning Classification with Automated Parameter Tuning
+#' Deep Learning Classification with Google Hyper-parameter Tuning
 #' @param x training feature matrix
 #' @param y target matrix
 #' @param num_layer a vector of integers indicating the number of hidden layers to test. Default to seq(1,5,1)
@@ -8,7 +8,7 @@
 #' @param min_dropout A number between 0 and 1 indicating the minimum dropoff rate in a layer. Default to 0
 #' @param max_lr maximum learning rate in a run. Default to 0.2
 #' @param min_lr minimum learning rate in a run. Default to 0.001
-#' @param iteration_per_layer Number of parameter randomizations for a given number of hidden layers. More iterations will explore a larger parameter space
+#' @param validation_split % of data used for validation
 #' @param num_epoch number of epoches to go through during training
 #' @param num_patience number of patience in early stopping criteria
 #' @return returns a list object with two values:
@@ -19,37 +19,47 @@
 google_logistic=function(x,
                        y,
                        # optimizer parameters
-                       num_layer=seq(1,5,1),
-                       max_units=NULL,
-                       start_unit=5,
-                       max_dropout=0.2,
-                       min_dropout=0.0001,
-                       max_lr=0.2,
-                       min_lr=0.001,
-                       iteration_per_layer=5,
+                       num_layer,
+                       max_units,
+                       start_unit,
+                       max_dropout,
+                       min_dropout,
+                       max_lr,
+                       min_lr,
 
                        # model parameters
-                       num_epoch=5,
-                       num_patience=3
+                       validation_split,
+                       num_epoch,
+                       num_patience
 ){
   set.seed(0)
   if(is.null(max_units)){
     max_units=round(nrow(x)/(2*(ncol(x)+ncol(y))))
   }
+  if(min_dropout<0){
+    stop('Dropout bounds must be non-negative \n')
+  }
+  if(max_dropout<min_dropout){
+    stop('Max dropout rate is set to be smaller than min dropout rate \n')
+  }
+  if(max_lr<min_lr){
+    stop('Max learning rate is set to be smaller than min learning rate \n')
+  }
+  
   ## Create training and test set
   if(nrow(x)!=nrow(y)){
     stop('Length of input and target is not the same')
   }
   dir=getwd()
   n=nrow(x)
-  train_size=round(0.8*n)
+  train_size=round((1-validation_split)*n)
   train_index=sample(size=train_size,x=1:n)
   x_train=x[train_index,]
   x_test=x[-train_index,]
 
   y_train=y[train_index,]
   y_test=y[-train_index,]
-  cat('Split data into train and test by 80:20\n')
+  cat('Split data into train and test by',round(100-validation_split*100),':',round(validation_split*100),'\n')
   cat(nrow(x_train),'rows in training and ',nrow(x_test),'rows in test \n')
   cat('# of fetures in X:',ncol(x),'\n')
   cat('# of classes in Y:',ncol(y),'\n')
@@ -60,6 +70,7 @@ google_logistic=function(x,
   write.csv(y_test,'y_test.csv',row.names=F)
 
  for(i in 1:length(num_layer)){
+   
    write_train(num_layer=num_layer[i],num_epoch=num_epoch,num_patience=num_patience)
    write_yml(num_layer=num_layer[i], max_units,
     start_unit,
@@ -72,6 +83,7 @@ google_logistic=function(x,
   train_name=paste0('train_layer_',num_layer,'.R')
   config_name=paste0('config_layer_',num_layer,'.yml')
   for(i in 1:length(num_layer)){
+    cat('####### Layer',i,'########\n')
     cloudml_train(file = train_name[i],config =config_name[i])
   }
 

@@ -27,7 +27,7 @@ write_train=function(num_layer,
   for (i in 1:num_layer){
     flag_code=paste0(flag_code,
       'flag_integer("layer',i,'", 10),
-      flag_numeric("dropout',i,'",0.1),'
+      flag_numeric("dropout',i,'",0.1),\n'
     )
   }
 flag_code=paste0(
@@ -41,15 +41,14 @@ flag_code=paste0(
     layer_dense(batch_input_shape =list(NULL,ncol(x_train)) ,
                 units = ncol(x_train),
                 activation = "relu",
-                kernel_initializer = "normal")
-  '
+                kernel_initializer = "normal")%>%\n'
   # add layers
   for(i in 1:num_layer){
     model_code=paste0(model_code,
-      '%>%layer_dense(units = layer',i,',activation = "relu")\n',
-      '%>%layer_dropout(rate =dropout',i,')\n')
+      'layer_dense(units = FLAGS$layer',i,',activation = "relu")%>%\n',
+      'layer_dropout(rate = FLAGS$dropout',i,')%>%\n')
   }
-model_code=paste0(model_code,'%>%layer_dense(units=ncol(y_train),activation = "softmax")
+model_code=paste0(model_code,'layer_dense(units=ncol(y_train),activation = "softmax")
 # compile model
 model%>%
   compile(
