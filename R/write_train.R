@@ -18,9 +18,11 @@ write_train=function(num_layer,
   if(target_type=='classification'){
     loss='categorical_crossentropy'
     metric='accuracy'
+    optimizer='optimizer_adam'
   }else if(target_type=='regression'){
     loss='mean_squared_error'
     metric='mse'
+    optimizer='optimizer_rmsprop'
   }
  
   setup_code='
@@ -67,7 +69,7 @@ model_code=paste0(model_code,'layer_dense(units=ncol(y_train),activation = "soft
 # compile model
 model%>%
   compile(
-    optimizer = optimizer_adam(lr=FLAGS$lr),
+    optimizer = ',optimizer,'(lr=FLAGS$lr),
     loss = "',loss,'",
     metrics = c("',metric,'")
   )

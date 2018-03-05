@@ -4,7 +4,7 @@
 #' @param complexity a vector indicating numbers of hidden units in each layer, e.g. c(3,6,7) means 3 layers with 3, 6, 7 units in each layer
 #' @param dropout a vector indicating the dropout rate in each layer, e.g c(0.1,0.2,0.3)
 #' @param lr learning rate for the optimizer
-#' @param validation_split % of data used for validation
+#' @param validation_split percent of data used for validation
 #' @param num_epoch number of epoches to go through during training
 #' @param num_patience number of patience in early stopping criteria
 #' @return returns a list object with three values: 
@@ -13,7 +13,7 @@
 #' accuracy: a vector containing accuracy value in each epoch
 #' @export
 
-dl_regression_single=function(x,y,complexity,dropout,lr,validation_split=0.2,num_epoch=5,num_patience=3){
+dl_regression_single=function(x,y,complexity,dropout,lr,validation_split,num_epoch,num_patience){
   library(keras)
   model=keras_model_sequential()
   model=model%>%
@@ -34,8 +34,7 @@ dl_regression_single=function(x,y,complexity,dropout,lr,validation_split=0.2,num
   
   model%>%
     compile(
-      optimizer = optimizer_rmsprop(lr=0.001),
-      validation_split=validation_split,
+      optimizer = optimizer_rmsprop(lr=lr),
       loss = 'mean_squared_error',
       metrics = c('mse')
     )
@@ -43,7 +42,7 @@ dl_regression_single=function(x,y,complexity,dropout,lr,validation_split=0.2,num
   early_stopping <- callback_early_stopping(monitor = 'val_loss', patience = num_patience)
   
   model_train=model%>%
-    fit(x = x,y=y,callbacks = c(early_stopping),epochs = num_epoch,verbose = 0)
+    fit(x = x,y=y,callbacks = c(early_stopping),epochs = num_epoch,verbose = 0,validation_split = validation_split)
   
   output_metric=model_train$metrics
   cat(paste0('Best validation loss is ',round(min(output_metric$val_loss),5),'. '))

@@ -66,8 +66,8 @@ deep_lm_local=function(x,
                      complexity=list(complexity),
                      dropout=list(dropout),
                      lr=lr,
-                     loss=round(min(model$val_loss),5),
-                     accuracy=round(min(model$val_mean_squared_error),5)
+                     loss=round(min(model$loss),5),
+                     accuracy=round(min(model$mse),5)
                    )
       )
       
@@ -75,7 +75,7 @@ deep_lm_local=function(x,
   }
   
   # Find the best model
-  best_model_param=output[which(output$accuracy==min(output$accuracy)),]
+  best_model_param=output[which(output$accuracy==min(output$accuracy))[1],]
   cat('###########  The best model ####### \n')
   cat(paste0('Number of layers: ',best_model_param$num_layer,'\n'))
   cat('Complexity: ')
@@ -91,7 +91,8 @@ deep_lm_local=function(x,
                                       dropout = best_model_param$dropout[[1]],
                                       lr=best_model_param$lr,
                                       num_epoch = num_epoch, 
-                                      num_patience = num_patience)
+                                      num_patience = num_patience,
+                                  validation_split = validation_split)
   
   
   return(list(train_performance=output,

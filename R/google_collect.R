@@ -15,9 +15,9 @@ google_collect=function(model_id,project_name,model_name,version){
   for(i in 3:(ncol(trials)-1)){
     cat(colnames(trials)[i],': ',trials[1,i],'\n')
   }
-  model_dir=paste0('gs://',project_name,'/r-cloudml/runs/',model_id,'/savemodel/')
-  cloudml_deploy(model_dir,name=model_name,version = as.character(version))
-  cat('Your model is deployed. You can predict new data by running:\n')
-  cat('cloudml_predict(X_test,name=',model_name,',version=',version,')\n')
+  # model_dir=paste0('gs://',project_name,'/r-cloudml/runs/',model_id,'/savemodel/')
+  # cloudml_deploy(model_dir,name=model_name,version = as.character(version))
+  # cat('Your model is deployed. You can predict new data by running:\n')
+  # cat('cloudml_predict(X_test,name=',model_name,',version=',version,')\n')
   
 }

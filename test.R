@@ -25,7 +25,7 @@ x_train=as.matrix(titanic_trans_train%>%select(-Survived))
 x_train=normalize(x_train)
 
 
-deep_logistic(x_train,y_train,option = 'google',num_layer = c(1,2))
+deep_lm(x_train,y_train,option = 'google',num_layer = c(1))
 
 google_logistic(x_train,y_train,num_layer = c(1,2))
 # write_yml(num_layer = c(2),max_units = 10,start_unit = 1,max_dropout = 0.1,min_dropout = 0.01,max_lr = 0.5,min_lr = 0.1)
@@ -37,7 +37,8 @@ sink(con, append=TRUE)
 google_logistic(x_train,y_train,num_layer = c(1))
 
 
-######## testing yaml ######
+### test collect
+google_collect(model_id = 'cloudml_2018_03_05_162912787',project_name = 'easyai-196519',model_name = 'test',version = 1)
 
 ############ Old testing script ################
 output=deep_logistic(x_train,y_train)
