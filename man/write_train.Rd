@@ -4,7 +4,7 @@
 \alias{write_train}
 \title{Write train.R file for cloudml_train}
 \usage{
-write_train(num_layer, num_epoch, num_patience)
+write_train(num_layer, num_epoch, num_patience, target_type)
 }
 \arguments{
 \item{num_layer}{Number of hidden layer_dense}
@@ -12,6 +12,8 @@ write_train(num_layer, num_epoch, num_patience)
 \item{num_epoch}{number of epoches to go through during training}
 
 \item{num_patience}{number of patience in early stopping criteria}
+
+\item{target_type}{either classification or regression}
 }
 \description{
 Write train.R file for cloudml_train

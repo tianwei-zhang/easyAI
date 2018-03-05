@@ -2,10 +2,11 @@
 % Please edit documentation in R/google_logistic.R
 \name{google_logistic}
 \alias{google_logistic}
-\title{Deep Learning Classification with Automated Parameter Tuning}
+\title{Deep Learning Classification with Google Hyper-parameter Tuning}
 \usage{
 google_logistic(x, y, num_layer, max_units, start_unit, max_dropout,
-  min_dropout, max_lr, min_lr, validation_split, num_epoch, num_patience)
+  min_dropout, max_lr, min_lr, validation_split, num_epoch, num_patience,
+  machine_type, target_type)
 }
 \arguments{
 \item{x}{training feature matrix}
@@ -31,6 +32,10 @@ google_logistic(x, y, num_layer, max_units, start_unit, max_dropout,
 \item{num_epoch}{number of epoches to go through during training}
 
 \item{num_patience}{number of patience in early stopping criteria}
+
+\item{machine_type}{type of server to use. Could be standard, standard_gpu, standard_p100. For more visit https://cloud.google.com/ml-engine/docs/training-overview#machine_type_table}
+
+\item{target_type}{either classification or regression}
 }
 \value{
 returns a list object with two values:
@@ -38,5 +43,5 @@ train_performance: A table with parameters and model performance metrics
 best_model: a keras_model object with the optimal parameters
 }
 \description{
-Deep Learning Classification with Automated Parameter Tuning
+Deep Learning Classification with Google Hyper-parameter Tuning
 }

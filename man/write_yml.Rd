@@ -5,7 +5,7 @@
 \title{Write config.yml file for cloudml_train}
 \usage{
 write_yml(num_layer, max_units, start_unit, max_dropout, min_dropout, max_lr,
-  min_lr)
+  min_lr, machine_type)
 }
 \arguments{
 \item{num_layer}{Number of hidden layer_dense}
@@ -21,6 +21,8 @@ write_yml(num_layer, max_units, start_unit, max_dropout, min_dropout, max_lr,
 \item{max_lr}{maximum learning rate in a run. Default to 0.2}
 
 \item{min_lr}{minimum learning rate in a run. Default to 0.001}
+
+\item{machine_type}{type of server to use. Could be standard, standard_gpu, standard_p100. For more visit https://cloud.google.com/ml-engine/docs/training-overview#machine_type_table}
 }
 \description{
 Write config.yml file for cloudml_train

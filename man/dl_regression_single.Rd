@@ -4,8 +4,8 @@
 \alias{dl_regression_single}
 \title{Deep Learning Regression with Known Network Structure}
 \usage{
-dl_regression_single(x, y, complexity, dropout, lr, num_epoch = 5,
-  num_patience = 3)
+dl_regression_single(x, y, complexity, dropout, lr, validation_split = 0.2,
+  num_epoch = 5, num_patience = 3)
 }
 \arguments{
 \item{x}{training feature matrix}
@@ -17,6 +17,8 @@ dl_regression_single(x, y, complexity, dropout, lr, num_epoch = 5,
 \item{dropout}{a vector indicating the dropout rate in each layer, e.g c(0.1,0.2,0.3)}
 
 \item{lr}{learning rate for the optimizer}
+
+\item{validation_split}{% of data used for validation}
 
 \item{num_epoch}{number of epoches to go through during training}
 

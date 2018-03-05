@@ -7,7 +7,7 @@
 deep_logistic(x, y, option, num_layer = seq(1, 3, 1), max_units = NULL,
   start_unit = 5, max_dropout = 0.2, min_dropout = 0, max_lr = 0.2,
   min_lr = 0.001, iteration_per_layer = 10, validation_split = 0.2,
-  num_epoch = 10, num_patience = 3)
+  num_epoch = 10, num_patience = 3, machine_type = "standard")
 }
 \arguments{
 \item{x}{training feature matrix}
@@ -37,6 +37,8 @@ deep_logistic(x, y, option, num_layer = seq(1, 3, 1), max_units = NULL,
 \item{num_epoch}{number of epoches to go through during training. Default to 10}
 
 \item{num_patience}{number of patience in early stopping criteria. Default to 3}
+
+\item{machine_type}{type of server to use. Could be standard, standard_gpu, standard_p100. For more visit https://cloud.google.com/ml-engine/docs/training-overview#machine_type_table}
 }
 \value{
 returns a list object with two values: 

@@ -6,6 +6,7 @@
 #' @param min_dropout A number between 0 and 1 indicating the minimum dropoff rate in a layer. Default to 0
 #' @param max_lr maximum learning rate in a run. Default to 0.2
 #' @param min_lr minimum learning rate in a run. Default to 0.001
+#' @param machine_type type of server to use. Could be standard, standard_gpu, standard_p100. For more visit https://cloud.google.com/ml-engine/docs/training-overview#machine_type_table
 #' @export
 
 write_yml=function(num_layer,
@@ -14,17 +15,18 @@ write_yml=function(num_layer,
    max_dropout,
    min_dropout,
    max_lr,
-   min_lr){
-     code='
+   min_lr,
+   machine_type){
+     code=paste0('
 trainingInput:
   scaleTier: CUSTOM
-  masterType: standard_gpu
+  masterType: ',machine_type,'
   hyperparameters:
     goal: MINIMIZE
     hyperparameterMetricTag: val_loss
     maxTrials: 20
     maxParallelTrials: 5
-    params:'
+    params:')
 
       for(i in 1:num_layer){
         code=paste0(code,'

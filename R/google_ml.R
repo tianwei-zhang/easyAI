@@ -18,7 +18,7 @@
 #' best_model: a keras_model object with the optimal parameters
 #' @export
 
-google_logistic=function(x,
+google_ml=function(x,
                        y,
                        # optimizer parameters
                        num_layer,
@@ -75,7 +75,7 @@ google_logistic=function(x,
 
  for(i in 1:length(num_layer)){
    
-   write_train(num_layer=num_layer[i],num_epoch=num_epoch,num_patience=num_patience,target_type = 'classification')
+   write_train(num_layer=num_layer[i],num_epoch=num_epoch,num_patience=num_patience,target_type = target_type)
    write_yml(num_layer=num_layer[i], max_units,
     start_unit,
     max_dropout,

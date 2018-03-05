@@ -2,12 +2,27 @@
 #' @param num_layer Number of hidden layer_dense
 #' @param num_epoch number of epoches to go through during training
 #' @param num_patience number of patience in early stopping criteria
+#' @param target_type either classification or regression
 #' @export
 
 write_train=function(num_layer,
   # model parameters
  num_epoch,
- num_patience){
+ num_patience,
+ target_type){
+  
+  if(target_type!='classification' & target_type!='regression'){
+    stop('Target type needs to be either classification or regression\n')
+  }
+  
+  if(target_type=='classification'){
+    loss='categorical_crossentropy'
+    metric='accuracy'
+  }else if(target_type=='regression'){
+    loss='mean_squared_error'
+    metric='mse'
+  }
+ 
   setup_code='
   x_train=read.csv("x_train.csv")
   y_train=read.csv("y_train.csv")
@@ -53,8 +68,8 @@ model_code=paste0(model_code,'layer_dense(units=ncol(y_train),activation = "soft
 model%>%
   compile(
     optimizer = optimizer_adam(lr=FLAGS$lr),
-    loss = "categorical_crossentropy",
-    metrics = c("accuracy")
+    loss = "',loss,'",
+    metrics = c("',metric,'")
   )
 
   # Fit models
