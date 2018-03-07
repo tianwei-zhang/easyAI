@@ -51,7 +51,7 @@ So how does the easyAI package alleviate these challenges?
 2. Model structure (e.g. number of layers, learning rate) is optimized to achieve the best performance. Users can choose either local or google cloud to tune the hyer-parameters such as learning rate and number of units in hidden layers. Users can be more confident about the final model and its performance (in case of comparison)
 
 ## Technical Explanation
-
+### Overview
 
 
 

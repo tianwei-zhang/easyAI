@@ -3,3 +3,4 @@
 devtools::load_all(pkg='C://Users/Tianwei Zhang/Documents/GitHub/easyAI')
 devtools::document(pkg='C://Users/Tianwei Zhang/Documents/GitHub/easyAI')
 library(easyAI)
+devtools::install_github('tianwei-zhang/easyAI')
