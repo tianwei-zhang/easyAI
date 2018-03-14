@@ -107,7 +107,7 @@ Here are the list of parameters you can use to control this process:
 
 
 
-####Google Cloud Hyper-parameter Tuning
+#### Google Cloud Hyper-parameter Tuning
 
 Random search is a naïve process which is limited by computing power. Without sufficient samples, we cannot confidently say that the output is close to optimum. Google Cloud solves this problem by apply Bayesian optimization to our deep learning model parameters. 
 
