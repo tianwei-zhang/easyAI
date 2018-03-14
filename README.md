@@ -8,8 +8,6 @@ easyAI aims to help data scientists apply Deep Learning models to traditional ma
 ```R
 devtools::install_github('tianwei-zhang/easyAI')
 ```
-Auth_token can be generated from your enterprise GitHub setting menu. Click on your avatar/picture, and then setting. Go to Personal access tokens and generate new token.
-
 # Usage
 
 ## Classification

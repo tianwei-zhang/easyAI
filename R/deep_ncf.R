@@ -10,7 +10,7 @@
 #' @param max_mf_output_dim Max number of latent factors to represent users and items
 #' @param num_epoch number of epoches to go through during training
 #' @param top Number of top products and customers to include. Can be NULL (e.g. will include everything)
-#' @return returns a list object with two values: 
+#' @return returns a list object with two values:
 #' train_performance: A table with parameters and model performance metrics
 #' best_model: a keras_model object with the optimal parameters
 #' @export
@@ -32,24 +32,24 @@ deep_ncf=function(data,
   set.seed(0)
 
   start_unit=min(start_unit,max_units)
-  
+
   output=NULL
   for(i in num_layer){
     for(j in 1:(i*iteration_per_layer)){
       complexity=round(runif(i,min=start_unit,max=max_units))
       lr=runif(1,min_lr,max_lr)
       mf_output_dim=round(runif(1,min_mf_output_dim,max_mf_output_dim)/2)*2
-      
+
       cat(paste0('############  Layer ',i,'. Run ',j,'  ############\n'))
       cat('Complexity: ')
       cat(paste0(complexity,collapse = ','))
       cat('\n')
-      cat('MF layer output nodes: ',mf_output_dim)
+      cat('Number of latent vectors: ',mf_output_dim)
       cat('\n')
       cat('lr: ',lr)
       cat('\n')
       model=ncf_single(data,mf_output_dim,mlp_complexity=complexity,lr=lr,epoch=num_epoch)
-      
+
       output=rbind(output,
                    tibble(
                      num_layer=i,
@@ -58,13 +58,13 @@ deep_ncf=function(data,
                      mf_output_dim=mf_output_dim,
                      lr=lr,
                      loss=min(min(model$loss),5)
-                    
+
                    )
       )
-      
+
     }
   }
-  
+
   # Find the best model
   best_model_param=output[which(output$loss==max(output$loss)),]
   cat('###########  The best model ####### \n')
@@ -72,7 +72,7 @@ deep_ncf=function(data,
   cat('Complexity: ')
   cat(paste0(best_model_param$complexity[[1]],collapse = ','))
   cat('\n')
-  cat('MF layer output nodes: ',best_model_param$mf_output_dim)
+  cat('Number of latent vectors: ',best_model_param$mf_output_dim)
   cat('\n')
   cat('lr: ',best_model_param$lr)
   cat('\n')
@@ -81,7 +81,7 @@ deep_ncf=function(data,
                         mlp_complexity = best_model_param$complexity[[1]],
                         lr=best_model_param$lr,
                         epoch=num_epoch)
-  
+
   return(list(train_performance=output,
               best_model=best_model
   )
