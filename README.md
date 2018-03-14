@@ -24,7 +24,7 @@ output=deep_lm(x_train,y_train,option='local')
 ### Hyper-parameter tuning with Google cloud
 ```R
 output=deep_lm(x_train,y_train,option='google')
-google_collect(model_id='your_model_id',project_name='project_name')
+google_collect(model_id='your_model_id')
 ```
 
 
@@ -36,7 +36,11 @@ output=deep_ncf(data = data,max_units = 16,start_unit = 2)
 ```
 
 ### Collaborative Deep learning
-TBD
+```
+cdf_single(items, rating)
+```
+
+
 
 # Details
 ## Technical Explanation
