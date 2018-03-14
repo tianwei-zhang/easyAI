@@ -54,7 +54,7 @@ So how does the easyAI package alleviate these challenges?
 ### Overview
 For deep_lm and deep_logistic, the idea is to construct multiple fully connected layers (i.e. dense layers) with predefined activations, optimizer, and model metrics. At the same time, users can tune specific network parameters such as the number of layers through either random search or Google Cloud.
 
-![Model Network Structure](img\network.PNG)
+![](img\network.PNG)
 
 ​                                                                    *Model Network Layout*
 
