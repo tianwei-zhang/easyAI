@@ -10,21 +10,23 @@ write_train=function(num_layer,
  num_epoch,
  num_patience,
  target_type){
-  
+
   if(target_type!='classification' & target_type!='regression'){
     stop('Target type needs to be either classification or regression\n')
   }
-  
+
   if(target_type=='classification'){
     loss='categorical_crossentropy'
     metric='accuracy'
     optimizer='optimizer_adam'
+    activation='softmax'
   }else if(target_type=='regression'){
     loss='mean_squared_error'
     metric='mse'
     optimizer='optimizer_rmsprop'
+    activation='linear'
   }
- 
+
   setup_code='
   x_train=read.csv("x_train.csv")
   y_train=read.csv("y_train.csv")
@@ -65,7 +67,7 @@ flag_code=paste0(
       'layer_dense(units = FLAGS$layer',i,',activation = "relu")%>%\n',
       'layer_dropout(rate = FLAGS$dropout',i,')%>%\n')
   }
-model_code=paste0(model_code,'layer_dense(units=ncol(y_train),activation = "softmax")
+model_code=paste0(model_code,'layer_dense(units=ncol(y_train),activation = "',activation,'")
 # compile model
 model%>%
   compile(

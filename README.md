@@ -52,8 +52,32 @@ So how does the easyAI package alleviate these challenges?
 
 ## Technical Explanation
 ### Overview
+For deep_lm and deep_logistic, the idea is to construct multiple fully connected layers (i.e. dense layers) with predefined activations, optimizer, and model metrics. At the same time, users can tune specific network parameters such as the number of layers through either random search or Google Cloud.
+
+![Model Network Structure](C:\Users\Tianwei Zhang\Documents\GitHub\easyAI\img\network.PNG)
+
+​                                                                    *Model Network Layout*
+
+Here are the pre-defined parameters:
+
+| Parameter               | deep_lm            | deep_logistic            |
+| ----------------------- | ------------------ | ------------------------ |
+| Output layer activation | linear             | softmax                  |
+| Optimizer               | Rmsprop            | Adam                     |
+| Model metrics           | mse                | Accuracy                 |
+| Loss function           | Mean squared error | Categorical crossentropy |
+
+Here are the auto-tuned parameters:
+
+| Parameter                            | Explanation                                                  |
+| ------------------------------------ | ------------------------------------------------------------ |
+| Learning rate                        | The rate which we reach towards the optimal solution (e.g. too fast --> we overreach the target and oscillate around the optima; too slow --> never reach the optima within time limit) |
+| Number of units in each hidden layer | Number of neurons in each hidden layer. It is a vector with the length of vector equals to the number of hidden layers. With random search, this parameter is randomly generated within the bounds (more on this latter) during each iteration. With Google Cloud hyper-parameter tuning, this parameter is optimized through the Bayesian process |
+| Number of hidden layers              | Number of learning layers in the illustration above. Note that we probably don't need more than 5 layers |
+| Dropout rate                         | Percentage of randomly selected neurons to be ignored in each layer. It is also a vector with the length of vector equals to the number of hidden layers. It is a regularization technique such that the network will be more robust |
 
 
 
 # Details
+
 TBD
