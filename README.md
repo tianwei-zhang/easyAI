@@ -1,7 +1,3 @@
-[TOC]
-
-
-
 # Introduction
 
 easyAI aims to help data scientists apply Deep Learning models to traditional machine learning problems (e.g. non image/speech, tabular data). The primary benefits are:
@@ -89,7 +85,7 @@ deep_lm(x,y,option='google')
 
 Local optimization deploys random search to tune parameters. It is similar to a Monte Carlo simulation, where random combinations of parameters are generated and evaluated. The combination of parameters with the best model performance is selected. 
 
-![target](/img/target.png)
+![target](img/target.png)
 
 Here are the list of parameters you can use to control this process:
 
