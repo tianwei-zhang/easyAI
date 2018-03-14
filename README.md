@@ -103,6 +103,8 @@ Here are the list of parameters you can use to control this process:
 | num_epoch           | int    | number of epochs to go through during training. Higher value requires more computing power |
 | num_patience        | int    | number of epochs to wait before early stop if no progress on the validation set |
 
+
+
 ####Google Cloud Hyper-parameter Tuning
 
 Random search is a naïve process which is limited by computing power. Without sufficient samples, we cannot confidently say that the output is close to optimum. Google Cloud solves this problem by apply Bayesian optimization to our deep learning model parameters. 
