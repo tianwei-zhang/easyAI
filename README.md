@@ -85,7 +85,7 @@ deep_lm(x,y,option='google')
 
 Local optimization deploys random search to tune parameters. It is similar to a Monte Carlo simulation, where random combinations of parameters are generated and evaluated. The combination of parameters with the best model performance is selected. 
 
-![target](img/target.png)
+![target](img/target.PNG)
 
 Here are the list of parameters you can use to control this process:
 
