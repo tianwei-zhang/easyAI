@@ -36,7 +36,7 @@ deep_logistic_local=function(x,
 ){
   set.seed(0)
   
-  if(min_dropout<=0){
+  if(min_dropout<0){
     stop('Dropout bounds must be positive \n')
   }
   if(max_dropout<min_dropout){
