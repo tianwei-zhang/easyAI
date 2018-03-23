@@ -33,7 +33,7 @@ deep_ncf(data, num_layer = seq(1, 5, 1), max_units = 10, start_unit = 3,
 \item{top}{Number of top products and customers to include. Can be NULL (e.g. will include everything)}
 }
 \value{
-returns a list object with two values: 
+returns a list object with two values:
 train_performance: A table with parameters and model performance metrics
 best_model: a keras_model object with the optimal parameters
 }

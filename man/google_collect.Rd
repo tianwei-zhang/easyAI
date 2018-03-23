@@ -4,16 +4,10 @@
 \alias{google_collect}
 \title{Collect model output from Google Cloud}
 \usage{
-google_collect(model_id, project_name, model_name, version)
+google_collect(model_id)
 }
 \arguments{
 \item{model_id}{a string output from the previous function indicating the model_id}
-
-\item{project_name}{a stinrg indicating the name of your google ML project. It is the name when you created the project in Google Cloud console}
-
-\item{model_name}{an user input indicating the name of the current model. Can be anything}
-
-\item{version}{version ID for the model_name}
 }
 \description{
 Collect model output from Google Cloud

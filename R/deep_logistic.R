@@ -61,8 +61,7 @@ deep_logistic=function(
                         
                         # model parameters
                         num_epoch=num_epoch,
-                        num_patience=num_patience,
-                        machine_type=machine_type)
+                        num_patience=num_patience)
     ##### Google cloud option #####
   }else if(option=='google'){
     google_ml(x=x,

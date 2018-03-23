@@ -4,13 +4,19 @@
 \alias{cdl_single}
 \title{Collaborative Deep Learning with a single network configuration}
 \usage{
-cdl_single(items, rating)
+cdl_single(items, rating, units_middle = 10, units_outer = 15)
 }
 \arguments{
 \item{items}{item matrix with numeric item attributes}
 
-\item{rating}{user-item rating matrix 
-return return a user-item ratings with scores for previously unseen items for each user}
+\item{rating}{user-item rating matrix}
+
+\item{units_middle}{number of units in the intermediate layer. This is the layer to represent item latent latent_vectors}
+
+\item{units_outer}{number of units in the first and last hidden layers}
+}
+\value{
+return a user-item ratings with scores for previously unseen items for each user
 }
 \description{
 Collaborative Deep Learning with a single network configuration
