@@ -1,0 +1,37 @@
+
+> x_train = read.csv("x_train.csv")
+
+> y_train = read.csv("y_train.csv")
+
+> x_test = read.csv("x_test.csv")
+
+> y_test = read.csv("y_test.csv")
+
+> x_train = as.matrix(x_train)
+
+> y_train = as.matrix(y_train)
+
+> x_test = as.matrix(x_test)
+
+> y_test = as.matrix(y_test)
+
+> library(keras)
+
+> FLAGS <- flags(flag_integer("layer1", 10), flag_numeric("dropout1", 
++     0.1), flag_integer("layer2", 10), flag_numeric("dropout2", 
++     0.1), f .... [TRUNCATED] 
+
+> model = keras_model_sequential()
+
+> model = model %>% layer_dense(batch_input_shape = list(NULL, 
++     ncol(x_train)), units = ncol(x_train), activation = "relu", 
++     kernel_initia .... [TRUNCATED] 
+
+> model %>% compile(optimizer = optimizer_adam(lr = FLAGS$lr), 
++     loss = "categorical_crossentropy", metrics = c("accuracy"))
+
+> early_stopping <- callback_early_stopping(monitor = "val_loss", 
++     patience = 3)
+
+> model %>% fit(x = x_train, y = y_train, validation_data = list(x_test, 
++     y_test), callbacks = c(early_stopping), epochs = 10)
