@@ -6,10 +6,8 @@ easyAI aims to help data scientists apply Deep Learning models to traditional ma
 - Automated neural network structure and parameter tuning. The learning functions will test various model configurations and select the best model based on performance
 
 # Installation
-```
-options(unzip='internal')  
-install_github("tzhang/Mck_EasyAI", host="https://githubent.mck-qb.com/api/v3",
-               auth_token='YOUR_AUTH_TOKEN')
+```R
+devtools::install_github('tianwei-zhang/easyAI')
 ```
 Auth_token can be generated from your enterprise GitHub setting menu. Click on your avatar/picture, and then setting. Go to Personal access tokens and generate new token.
 
